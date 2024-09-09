@@ -1,29 +1,33 @@
 import "./signIn_signUp.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Principal_img from "../../assets/background_trip.png";
 import Email_icon from "../../assets/email_icon.png"
 import Password_icon from "../../assets/password_icon.png"
 
 const SignInSignUp = () => {
-    const [signUp, setSignUp] = useState(true)
-    const [password, setPassword] = useState()
-    const [email, setEmail] = useState()
-    const [passwordConfirm, setPasswordConfitm] =  useState()
+    const [signUp, setSignUp] = useState(true);
+    const [password, setPassword] = useState();
+    const [email, setEmail] = useState();
+    const [passwordConfirm, setPasswordConfirm] =  useState();
+
+    const emailInputRef = useRef(null);
+    const passwordInputRef = useRef(null);
+    const passwordConfirmInputRef = useRef(null);
 
     const change_type_of_signUp = (isSignUp) => {
-        setSignUp(isSignUp)
+        setSignUp(isSignUp);
     }
 
     const handlePasswordChange = (event) => {
-        setPassword(event.target.value)
+        setPassword(event.target.value);
     }
 
     const handleEmailChange = (event) => {
-        setEmail(event.target.value)
+        setEmail(event.target.value);
     }
 
     const handlePasswordConfirmChange = (event) => {
-        setEmail(event.target.value)
+        setPasswordConfirm(event.target.value);
     }
 
     return (
@@ -53,7 +57,7 @@ const SignInSignUp = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="text_inputs">
+                            <div className="text_inputs" onClick={() => emailInputRef.current.focus()}>
                                 <div>
                                     <img className="principal_icons" src={Email_icon}/>
                                 </div>
@@ -63,11 +67,11 @@ const SignInSignUp = () => {
                                         <p>Email</p>
                                     </div>
                                     <div>
-                                        <input type="email" name="email" id="email" onChange={handleEmailChange} className="input_email_password input_email_password_email"/>
+                                        <input type="email" name="email" id="email" onChange={handleEmailChange} className="input_email_password input_email_password_email" ref={emailInputRef}/>
                                     </div>
                                 </div>
                             </div>
-                            <div className="text_inputs">
+                            <div className="text_inputs" onClick={() => passwordInputRef.current.focus()}>
                                 <div>
                                     <img className="principal_icons" src={Password_icon}/>
                                 </div>
@@ -77,10 +81,26 @@ const SignInSignUp = () => {
                                         <p className="text_inputs_type">Senha</p>
                                     </div>
                                     <div>
-                                        <input type="password" name="passwrod" id="password" onChange={handlePasswordChange} className="input_email_password"/>
+                                        <input type="password" name="password" id="password" onChange={handlePasswordChange} className="input_email_password" ref={passwordInputRef}/>
                                     </div>
                                 </div>
                             </div>
+                            {signUp && (
+                                <div className="text_inputs" onClick={() => passwordConfirmInputRef.current.focus()}>
+                                    <div>
+                                        <img className="principal_icons" src={Password_icon}/>
+                                    </div>
+                                    <div className="bar"/>
+                                    <div className="options_of_input">
+                                        <div>
+                                            <p className="text_inputs_type">Confirmar Senha</p>
+                                        </div>
+                                        <div>
+                                            <input type="password" name="password_confirm" id="password_confirm" onChange={handlePasswordConfirmChange} className="input_email_password" ref={passwordConfirmInputRef}/>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                             <button className="Continue_button">
                                 <h2>Continuar</h2>
                             </button>
@@ -115,7 +135,7 @@ const SignInSignUp = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="text_inputs">
+                            <div className="text_inputs" onClick={() => emailInputRef.current.focus()}>
                                 <div>
                                     <img className="principal_icons" src={Email_icon}/>
                                 </div>
@@ -125,11 +145,11 @@ const SignInSignUp = () => {
                                         <p>Email</p>
                                     </div>
                                     <div>
-                                        <input type="email" name="email" id="email" onChange={handleEmailChange} className="input_email_password input_email_password_email"/>
+                                        <input type="email" name="email" id="email" onChange={handleEmailChange} className="input_email_password input_email_password_email" ref={emailInputRef}/>
                                     </div>
                                 </div>
                             </div>
-                            <div className="text_inputs">
+                            <div className="text_inputs" onClick={() => passwordInputRef.current.focus()}>
                                 <div>
                                     <img className="principal_icons" src={Password_icon}/>
                                 </div>
@@ -139,24 +159,26 @@ const SignInSignUp = () => {
                                         <p className="text_inputs_type">Senha</p>
                                     </div>
                                     <div>
-                                        <input type="password" name="passwrod" id="password" onChange={handlePasswordChange} className="input_email_password"/>
+                                        <input type="password" name="password" id="password" onChange={handlePasswordChange} className="input_email_password" ref={passwordInputRef}/>
                                     </div>
                                 </div>
                             </div>
-                            <div className="text_inputs">
-                                <div>
-                                    <img className="principal_icons" src={Password_icon}/>
-                                </div>
-                                <div className="bar"/>
-                                <div className="options_of_input">
+                            {signUp && (
+                                <div className="text_inputs" onClick={() => passwordConfirmInputRef.current.focus()}>
                                     <div>
-                                        <p className="text_inputs_type">Confirmar Senha</p>
+                                        <img className="principal_icons" src={Password_icon}/>
                                     </div>
-                                    <div>
-                                        <input type="password" name="passwrod_confirm" id="password_confirm" onChange={handlePasswordConfirmChange} className="input_email_password"/>
+                                    <div className="bar"/>
+                                    <div className="options_of_input">
+                                        <div>
+                                            <p className="text_inputs_type">Confirmar Senha</p>
+                                        </div>
+                                        <div>
+                                            <input type="password" name="password_confirm" id="password_confirm" onChange={handlePasswordConfirmChange} className="input_email_password" ref={passwordConfirmInputRef}/>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            )}
                             <button className="Continue_button">
                                 <h2>Continuar</h2>
                             </button>
