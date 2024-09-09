@@ -139,3 +139,10 @@ input[type="password"]:focus {
     border: none;
     color: #fff;
 }
+.ok_notok{
+    width: 30px;
+}
+.div_ok_notok{
+    margin-left: 10px;
+    width: 30px;
+}
