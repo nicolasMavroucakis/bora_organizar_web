@@ -5,6 +5,8 @@ import Email_icon from "../../assets/email_icon.png";
 import Password_icon from "../../assets/password_icon.png";
 import Ok from "../../assets/pass.png";
 import NotOk from "../../assets/denied.png";
+import { useNavigate } from 'react-router-dom';
+import { useGlobalContext } from "../../context/context";
 
 const SignInSignUp = () => {
     const [signUp, setSignUp] = useState(true);
@@ -12,10 +14,14 @@ const SignInSignUp = () => {
     const [email, setEmail] = useState("");
     const [passwordConfirm, setPasswordConfirm] = useState("");
     const [passwordIsCorrect, setPasswordIsCorrect] = useState(false);
+    const [emailIsValid, setEmailIsValid] = useState(false)
+    const { globalUser, setGlobalUser } = useGlobalContext();
 
     const emailInputRef = useRef(null);
     const passwordInputRef = useRef(null);
     const passwordConfirmInputRef = useRef(null);
+
+    const navigate = useNavigate();
 
     const change_type_of_signUp = (isSignUp) => {
         setSignUp(isSignUp);
@@ -28,7 +34,9 @@ const SignInSignUp = () => {
     };
 
     const handleEmailChange = (event) => {
-        setEmail(event.target.value);
+        const newEmail = event.target.value
+        setEmail(newEmail)
+        verifyIfEmailIsValid(newEmail)
     };
 
     const handlePasswordConfirmChange = (event) => {
@@ -40,6 +48,38 @@ const SignInSignUp = () => {
     const verifyIfPasswordsMatch = (passwordValue, passwordConfirmValue) => {
         setPasswordIsCorrect(passwordValue === passwordConfirmValue);
     };
+
+    const verifyIfEmailIsValid = (newEmail) => {
+        if (newEmail && newEmail.includes('@') && !newEmail.includes(' ')) {
+            setEmailIsValid(true)
+        } else {
+            setEmailIsValid(false)
+        }
+    }
+
+    const handleContinueClick = () => {
+        if (signUp) {
+            if (emailIsValid && emailIsValid) {
+                handleChangePage()
+            }
+            else {
+                console.log("email invalido ou senhas nao batem")
+            }
+        }
+        else {
+            if (emailIsValid) {
+                handleChangePage()
+            }
+            else {
+                console.log("email ou senha invalidos")
+            }
+        }
+        
+    }
+
+    const handleChangePage = () => {
+        navigate("/your-travels");
+    }
 
     return (
         <>
@@ -99,6 +139,12 @@ const SignInSignUp = () => {
                                         />
                                     </div>
                                 </div>
+                                <div className="div_ok_notok">
+                                        <img
+                                            className="ok_notok"
+                                            src={emailIsValid ? Ok : NotOk}
+                                        />
+                                </div>
                             </div>
                             <div
                                 className="text_inputs"
@@ -130,7 +176,6 @@ const SignInSignUp = () => {
                                         />
                                 </div>
                             </div>
-                            {signUp && (
                                 <div
                                     className="text_inputs"
                                     onClick={() =>
@@ -168,8 +213,7 @@ const SignInSignUp = () => {
                                         />
                                     </div>
                                 </div>
-                            )}
-                            <button className="Continue_button">
+                            <button className="Continue_button" onClick={handleContinueClick}>
                                 <h2>Continuar</h2>
                             </button>
                         </div>
@@ -236,6 +280,12 @@ const SignInSignUp = () => {
                                         />
                                     </div>
                                 </div>
+                                <div className="div_ok_notok">
+                                        <img
+                                            className="ok_notok"
+                                            src={emailIsValid ? Ok : NotOk}
+                                        />
+                                </div>
                             </div>
                             <div
                                 className="text_inputs"
@@ -261,7 +311,7 @@ const SignInSignUp = () => {
                                     </div>
                                 </div>
                             </div>
-                            <button className="Continue_button">
+                            <button className="Continue_button" onClick={handleContinueClick}>
                                 <h2>Continuar</h2>
                             </button>
                         </div>
